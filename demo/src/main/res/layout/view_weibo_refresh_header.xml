@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <FrameLayout
+        android:id="@+id/fl_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_state"
+        app:layout_constraintHorizontal_chainStyle="packed">
+
+        <literefresh.widget.LoadingView
+            android:id="@+id/loading_view"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/loading_view"
+            app:layout_constraintEnd_toEndOf="@+id/loading_view"
+            app:layout_constraintStart_toStartOf="@+id/loading_view"
+            app:layout_constraintTop_toTopOf="@+id/loading_view"
+            app:srcCompat="@drawable/ic_weibo_prt_pull_refresh_arrow_down" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:gravity="center"
+        android:textColor="@color/lr_color_gray"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/fl_state"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fl_state"
+        app:layout_constraintTop_toTopOf="@+id/fl_state"
+        tools:text="loading..." />
+
+</LinearLayout>

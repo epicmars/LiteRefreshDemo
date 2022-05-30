@@ -16,7 +16,7 @@ class MainActivity : BaseActivity() {
                     or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
         }
         supportFragmentManager.beginTransaction()
-            .add(R.id.fl_content, WeiboFragment())
+            .add(R.id.fl_content, AmapFragment())
             .commit()
     }
 }

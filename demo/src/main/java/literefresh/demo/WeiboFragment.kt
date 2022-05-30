@@ -73,8 +73,9 @@ class WeiboFragment : BaseFragment() {
         val topTriggerOffset = OffsetConfig.Builder().setOffset(headerHeight).build()
         behavior.config.topEdgeConfig.addCheckpoint(topTriggerOffset, Checkpoint.Type.TRIGGER_POINT)
 
-        val bottomTrigger = OffsetConfig.Builder().setOffset(1500).build()
+        val bottomTrigger = OffsetConfig.Builder().setOffsetRatioOfParent(0.9f).build()
         behavior.config.bottomEdgeConfig.addCheckpoint(bottomTrigger, Checkpoint.Type.TRIGGER_POINT)
+
         behavior.addOnRefreshListener(object : OnRefreshListener {
             override fun onRefreshStart() {
                 Timber.d(TAG, "onRefreshStart")

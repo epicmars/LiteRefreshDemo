@@ -35,13 +35,30 @@ class AmapFragment : BaseFragment() {
             ImageItem(R.drawable.amap_list2)
         )
 
+        val searchBarHeight =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 87f, resources.displayMetrics)
+        val searchBarBehavior = LiteRefresh.getHeaderBehavior(binding?.ivSearch)
+        searchBarBehavior.config.addTopCheckpoint(
+            OffsetConfig.Builder().setOffset(0).build(),
+            Checkpoint.Type.STOP_POINT
+        )
+
         val behavior = LiteRefresh.getContentBehavior(binding?.recyclerView)
+        behavior.config.bottomEdgeConfig.deactiveCheckpoint(
+            OffsetConfig.Builder()
+                .setOffset(0).build(),
+            Checkpoint.Type.STOP_POINT
+        )
+        behavior.config.bottomEdgeConfig.addCheckpoint(
+            OffsetConfig.Builder()
+                .setOffsetRatioOfParent(1.0f).build(),
+            Checkpoint.Type.STOP_POINT
+        )
         // fixme remove a default stop point, should stop point be treated specially?
         behavior.config.topEdgeConfig.deactiveCheckpoint(
             OffsetConfig.Builder().setOffset(0).build(), Checkpoint.Type.STOP_POINT
         )
-        val searchBarHeight =
-            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 87f, resources.displayMetrics)
+
         behavior.config.addTopCheckpoint(
             OffsetConfig.Builder().setOffset(searchBarHeight.toInt()).build(),
             Checkpoint.Type.STOP_POINT, Checkpoint.Type.ANCHOR_POINT

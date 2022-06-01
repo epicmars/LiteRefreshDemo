@@ -32,9 +32,8 @@
             <ImageView
                 android:id="@+id/iv_search"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
+                android:layout_height="87dp"
+                android:scaleType="fitXY"
                 android:src="@drawable/amap_search_bar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

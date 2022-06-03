@@ -3,6 +3,7 @@ package literefresh.demo
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import layoutbinder.annotations.BindLayout
@@ -13,6 +14,7 @@ import literefresh.behavior.Checkpoint
 import literefresh.behavior.Configuration
 import literefresh.behavior.OffsetConfig
 import literefresh.demo.databinding.FragmentAmapBinding
+import literefresh.demo.utils.StatusBarUtils
 import literefresh.sample.base.ui.BaseFragment
 import literefresh.sample.base.ui.RecyclerAdapter
 
@@ -25,6 +27,12 @@ class AmapFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//        binding.coordinator.post {
+//            val params = binding.coordinator.layoutParams as ConstraintLayout.LayoutParams
+//            params.topMargin = StatusBarUtils.getStatusBarHeight(requireContext())
+//            binding.coordinator.layoutParams = params
+//        }
+
         binding?.recyclerView?.layoutManager = LinearLayoutManager(context)
         binding?.recyclerView?.adapter = recyclerAdapter
 
@@ -36,12 +44,17 @@ class AmapFragment : BaseFragment() {
         )
 
         val searchBarHeight =
-            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 87f, resources.displayMetrics)
-        val searchBarBehavior = LiteRefresh.getHeaderBehavior(binding?.ivSearch)
-        searchBarBehavior.config.addTopCheckpoint(
-            OffsetConfig.Builder().setOffset(0).build(),
-            Checkpoint.Type.STOP_POINT
-        )
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 54f, resources.displayMetrics).toInt()
+//        val searchBarTopMargin =
+//            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24f, resources.displayMetrics).toInt()
+        val searchBarBehavior = LiteRefresh.getHeaderBehavior(binding?.ivSearch.root)
+//        searchBarBehavior.config.topEdgeConfig.deactiveCheckpoint(
+//            OffsetConfig.Builder().setOffset(0).build(), Checkpoint.Type.STOP_POINT
+//        )
+//        searchBarBehavior.config.addTopCheckpoint(
+//            OffsetConfig.Builder().setOffset(searchBarTopMargin).build(),
+//            Checkpoint.Type.STOP_POINT
+//        )
 
         val behavior = LiteRefresh.getContentBehavior(binding?.recyclerView)
         behavior.config.bottomEdgeConfig.deactiveCheckpoint(
@@ -60,7 +73,7 @@ class AmapFragment : BaseFragment() {
         )
 
         behavior.config.addTopCheckpoint(
-            OffsetConfig.Builder().setOffset(searchBarHeight.toInt()).build(),
+            OffsetConfig.Builder().setOffset(searchBarHeight).build(),
             Checkpoint.Type.STOP_POINT, Checkpoint.Type.ANCHOR_POINT
         )
 

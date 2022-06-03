@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:left="-8dp" android:right="-8dp" android:bottom="16dp">
+        <shape>
+            <gradient android:startColor="#00ffffff" android:endColor="#ffffffff" android:angle="270" android:type="linear"/>
+        </shape>
+    </item>
+    <item android:drawable="@drawable/amap_qs_searchbar_bottom_shadows"/>
+</layer-list>

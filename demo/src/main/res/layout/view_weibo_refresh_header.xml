@@ -37,7 +37,7 @@
             app:layout_constraintEnd_toEndOf="@+id/loading_view"
             app:layout_constraintStart_toStartOf="@+id/loading_view"
             app:layout_constraintTop_toTopOf="@+id/loading_view"
-            app:srcCompat="@drawable/ic_weibo_prt_pull_refresh_arrow_down" />
+            app:srcCompat="@drawable/weibo_prt_pull_refresh_arrow_down" />
 
     </FrameLayout>
 

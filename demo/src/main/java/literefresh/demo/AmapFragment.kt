@@ -44,7 +44,7 @@ class AmapFragment : BaseFragment() {
         )
 
         val searchBarHeight =
-            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 54f, resources.displayMetrics).toInt()
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70f, resources.displayMetrics).toInt()
 //        val searchBarTopMargin =
 //            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24f, resources.displayMetrics).toInt()
         val searchBarBehavior = LiteRefresh.getHeaderBehavior(binding?.ivSearch.root)

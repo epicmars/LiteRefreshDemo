@@ -3,8 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_weibo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#fafafa">
 
         <ImageView
             android:id="@+id/iv_weibo_header"
@@ -29,13 +31,6 @@
             app:layout_constraintTop_toBottomOf="@id/iv_weibo_header"
             android:background="#eeeeee">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                app:layout_behavior="literefresh.behavior.RefreshContentBehavior" />
-
             <literefresh.demo.view.WeiboRefreshHeaderView
                 android:id="@+id/refresh_header"
                 android:layout_width="match_parent"
@@ -45,6 +40,29 @@
                 android:id="@+id/loading_footer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                app:layout_behavior="literefresh.behavior.RefreshContentBehavior" />
+
+            <TextView
+                android:id="@+id/tv_msg_updated"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:text="热门微博已更新"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:background="#F4AD54"
+                android:alpha="0"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_weibo_header" />
+
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <ImageView

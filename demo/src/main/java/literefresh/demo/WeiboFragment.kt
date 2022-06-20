@@ -36,6 +36,7 @@ import literefresh.OnScrollListener
 import literefresh.behavior.Checkpoint
 import literefresh.behavior.Configuration
 import literefresh.behavior.OffsetConfig
+import literefresh.behavior.RefreshContentBehavior
 import literefresh.demo.databinding.FragmentWeiboBinding
 import literefresh.demo.databinding.ViewholderWeiboItemBinding
 import literefresh.demo.utils.StatusBarUtils
@@ -63,7 +64,7 @@ class WeiboFragment : BaseFragment() {
     )
     lateinit var mediaPlayer: MediaPlayer
     lateinit var handler: Handler
-
+    lateinit var behavior: RefreshContentBehavior<*>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,7 +97,7 @@ class WeiboFragment : BaseFragment() {
             32F,
             context?.resources?.displayMetrics
         ).toInt()
-        val behavior = LiteRefresh.getContentBehavior(binding?.recyclerView)
+        behavior = LiteRefresh.getContentBehavior(binding?.recyclerView)
 
         val topTriggerOffset = OffsetConfig.Builder().setOffset(headerHeight).build()
         behavior.config.topEdgeConfig.addCheckpoint(topTriggerOffset, Checkpoint.Type.TRIGGER_POINT)
@@ -108,6 +109,10 @@ class WeiboFragment : BaseFragment() {
             binding.tvMsgUpdated.animate().alpha(0f).translationY(-msgHeight.toFloat())
                 .setDuration(500).start()
             behavior.stopScroll(false)
+        }
+
+        val revealTopToastRunnable = {
+            revealTopToast()
         }
         behavior.addOnRefreshListener(object : OnRefreshListener {
             override fun onRefreshStart() {
@@ -134,13 +139,13 @@ class WeiboFragment : BaseFragment() {
                 Timber.d("onRefreshEnd")
                 playNewBlogSound()
                 behavior.animateToPositionIfLarger(msgHeight)
-                view.removeCallbacks(resetHeader)
-                view.post {
-                    revealTopToast()
-                }
+
+                view.removeCallbacks(revealTopToastRunnable)
+                view.post(revealTopToastRunnable)
 
                 binding.refreshHeader.visibility = View.GONE
 
+                view.removeCallbacks(resetHeader)
                 val dismissDelay = 1500L
                 view.postDelayed(resetHeader, dismissDelay)
             }
@@ -215,6 +220,11 @@ class WeiboFragment : BaseFragment() {
                 }
             }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        behavior.recycle()
     }
 
     private fun revealTopToast() {

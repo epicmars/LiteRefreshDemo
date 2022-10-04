@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package literefresh.demo.view;
+package literefresh.demo.weibo;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -28,7 +28,7 @@ import literefresh.LiteRefresh;
 import literefresh.OnLoadListener;
 import literefresh.OnScrollListener;
 import literefresh.behavior.Configuration;
-import literefresh.behavior.RefreshFooterBehavior;
+import literefresh.behavior.FooterLoaderBehavior;
 import literefresh.demo.R;
 import literefresh.widget.LoadingView;
 import literefresh.widget.RefreshFooterLayout;
@@ -56,7 +56,7 @@ public class WeiboLoadingFooterView extends RefreshFooterLayout implements OnScr
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        RefreshFooterBehavior footerBehavior = LiteRefresh.getAttachedBehavior(this);
+        FooterLoaderBehavior footerBehavior = LiteRefresh.getAttachedBehavior(this);
         if (footerBehavior != null) {
             footerBehavior.addOnScrollListener(this);
             footerBehavior.addOnLoadListener(this);

@@ -2,6 +2,7 @@ package literefresh.demo
 
 import android.view.View
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import literefresh.demo.databinding.VhAppEntryBinding
@@ -12,7 +13,7 @@ import literefresh.sample.base.ui.ViewBinder
 
 class AppEntryItem(
     @DrawableRes var imgRes: Int,
-    var name: String,
+    @StringRes var nameRes: Int,
     val onClickListener: OnEntryClickListener
 ) {
 
@@ -23,14 +24,14 @@ class AppEntryItem(
         other as AppEntryItem
 
         if (imgRes != other.imgRes) return false
-        if (name != other.name) return false
+        if (nameRes != other.nameRes) return false
 
         return true
     }
 
     override fun hashCode(): Int {
         var result = imgRes
-        result = 31 * result + name.hashCode()
+        result = 31 * result + nameRes.hashCode()
         return result
     }
 }
@@ -62,7 +63,7 @@ class AppEntryViewHolder(itemView: View?) : BaseViewHolder<VhAppEntryBinding>(it
     override fun <T> onBind(data: T, position: Int) {
         val item = data as AppEntryItem
         binding?.ivApp?.setImageResource(item.imgRes)
-        binding?.tvName?.setText(item.name)
+        binding?.tvName?.setText(item.nameRes)
         itemView.setOnClickListener {
             item.onClickListener.onEntryClick(item)
         }

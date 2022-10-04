@@ -31,12 +31,12 @@
             app:layout_constraintTop_toBottomOf="@id/iv_weibo_header"
             android:background="#eeeeee">
 
-            <literefresh.demo.view.WeiboRefreshHeaderView
+            <literefresh.demo.weibo.WeiboRefreshHeaderView
                 android:id="@+id/refresh_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <literefresh.demo.view.WeiboLoadingFooterView
+            <literefresh.demo.weibo.WeiboLoadingFooterView
                 android:id="@+id/loading_footer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
-                app:layout_behavior="literefresh.behavior.RefreshContentBehavior" />
+                app:layout_behavior="literefresh.behavior.ContentScrollableBehavior" />
 
             <TextView
                 android:id="@+id/tv_msg_updated"

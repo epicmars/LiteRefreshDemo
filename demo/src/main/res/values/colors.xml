@@ -12,4 +12,9 @@
     <color name="amap_common_bg">#f6f7f8</color>
     <color name="amap_c_1">#ffffff</color>
 
+    <!--    amap -->
+    <color name="c_1">#ffffff</color>
+    <color name="common_bg">#f6f7f8</color>
+    <color name="transParent">#00000000</color>
+
 </resources>

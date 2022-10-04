@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package literefresh.demo
+package literefresh.demo.weibo
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -36,7 +36,8 @@ import literefresh.OnScrollListener
 import literefresh.behavior.Checkpoint
 import literefresh.behavior.Configuration
 import literefresh.behavior.OffsetConfig
-import literefresh.behavior.RefreshContentBehavior
+import literefresh.behavior.ContentScrollableBehavior
+import literefresh.demo.R
 import literefresh.demo.databinding.FragmentWeiboBinding
 import literefresh.demo.databinding.ViewholderWeiboItemBinding
 import literefresh.demo.utils.StatusBarUtils
@@ -64,7 +65,7 @@ class WeiboFragment : BaseFragment() {
     )
     lateinit var mediaPlayer: MediaPlayer
     lateinit var handler: Handler
-    lateinit var behavior: RefreshContentBehavior<*>
+    lateinit var behavior: ContentScrollableBehavior<*>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,10 +76,10 @@ class WeiboFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.clWeibo.setPadding(0, StatusBarUtils.getStatusBarHeight(requireContext()), 0, 0)
+        binding.clWeibo.setPadding(0, StatusBarUtils.getStatusBarHeight(requireContext()), 0, 0)
 
-        binding?.recyclerView?.layoutManager = LinearLayoutManager(context)
-        binding?.recyclerView?.adapter = recyclerAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        binding.recyclerView.adapter = recyclerAdapter
 
         recyclerAdapter.register(WeiboViewHolder::class.java)
         recyclerAdapter.addPayload(
@@ -97,7 +98,7 @@ class WeiboFragment : BaseFragment() {
             32F,
             context?.resources?.displayMetrics
         ).toInt()
-        behavior = LiteRefresh.getContentBehavior(binding?.recyclerView)
+        behavior = LiteRefresh.getScrollableBehavior(binding.recyclerView)
 
         val topTriggerOffset = OffsetConfig.Builder().setOffset(headerHeight).build()
         behavior.config.topEdgeConfig.addCheckpoint(topTriggerOffset, Checkpoint.Type.TRIGGER_POINT)

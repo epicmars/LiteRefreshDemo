@@ -2,6 +2,7 @@ package literefresh.demo
 
 import android.os.Build
 import android.os.Bundle
+import android.service.autofill.Validators.or
 import android.view.View
 import layoutbinder.annotations.BindLayout
 import literefresh.sample.base.ui.BaseActivity
@@ -13,9 +14,11 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         mainFragment = MainFragment()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
+            window.decorView.systemUiVisibility =
+                window.decorView.systemUiVisibility or (
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
         }
         supportFragmentManager.beginTransaction()
             .add(R.id.fl_content, mainFragment)

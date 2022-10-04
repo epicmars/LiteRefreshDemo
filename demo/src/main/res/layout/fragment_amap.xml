@@ -22,29 +22,34 @@
             android:id="@+id/coordinator"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="36dp"
             app:layout_constraintBottom_toTopOf="@+id/iv_amap_nav_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <literefresh.demo.amap.RoundRectRelativeLayout
+                android:id="@+id/search_bar_bg"
+                android:layout_width="match_parent"
+                android:layout_height="86dp"
+                app:layout_behavior="literefresh.behavior.HeaderRefreshBehavior"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="86dp"
                 android:background="@drawable/amap_map_home_rect_layout_bg_top"
-                app:layout_behavior="literefresh.behavior.RefreshContentBehavior" />
+                app:layout_behavior="literefresh.behavior.ContentScrollableBehavior" />
 
             <include
                 layout="@layout/view_amap_search_bar"
-                android:id="@+id/iv_search"
+                android:id="@+id/search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_behavior="literefresh.behavior.RefreshHeaderBehavior"/>
+                app:layout_behavior="literefresh.behavior.HeaderRefreshBehavior"/>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <ImageView

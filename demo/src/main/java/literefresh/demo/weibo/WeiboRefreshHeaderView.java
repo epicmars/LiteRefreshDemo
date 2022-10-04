@@ -1,4 +1,4 @@
-package literefresh.demo.view;
+package literefresh.demo.weibo;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -16,7 +16,7 @@ import literefresh.LiteRefresh;
 import literefresh.OnRefreshListener;
 import literefresh.OnScrollListener;
 import literefresh.behavior.Configuration;
-import literefresh.behavior.RefreshHeaderBehavior;
+import literefresh.behavior.HeaderRefreshBehavior;
 import literefresh.demo.R;
 import literefresh.widget.LoadingView;
 import literefresh.widget.RefreshHeaderLayout;
@@ -50,7 +50,7 @@ public class WeiboRefreshHeaderView extends RefreshHeaderLayout implements OnScr
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        RefreshHeaderBehavior behavior = LiteRefresh.getAttachedBehavior(this);
+        HeaderRefreshBehavior behavior = LiteRefresh.getAttachedBehavior(this);
         behavior.addOnRefreshListener(this);
         behavior.addOnScrollListener(this);
     }

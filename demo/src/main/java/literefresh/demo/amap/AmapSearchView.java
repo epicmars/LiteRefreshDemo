@@ -1,20 +1,18 @@
-package literefresh.demo.view;
+package literefresh.demo.amap;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.widget.ImageViewCompat;
 
 import literefresh.LiteRefresh;
 import literefresh.OnRefreshListener;
 import literefresh.OnScrollListener;
 import literefresh.behavior.Configuration;
-import literefresh.behavior.RefreshHeaderBehavior;
+import literefresh.behavior.HeaderRefreshBehavior;
 import literefresh.demo.R;
 import literefresh.widget.RefreshHeaderLayout;
 
@@ -37,7 +35,7 @@ public class AmapSearchView extends RefreshHeaderLayout implements OnScrollListe
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        RefreshHeaderBehavior behavior = LiteRefresh.getAttachedBehavior(this);
+        HeaderRefreshBehavior behavior = LiteRefresh.getAttachedBehavior(this);
         behavior.addOnRefreshListener(this);
         behavior.addOnScrollListener(this);
     }

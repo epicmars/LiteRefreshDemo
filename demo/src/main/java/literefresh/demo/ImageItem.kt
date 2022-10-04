@@ -14,6 +14,6 @@ class ImageItem(@DrawableRes var imgRes: Int) {
 class ImageViewHolder(itemView: View?) : BaseViewHolder<ViewholderImageItemBinding>(itemView) {
     override fun <T> onBind(data: T, position: Int) {
         val item = data as ImageItem
-        binding?.ivWeibo?.setImageResource(item.imgRes)
+        binding?.ivImg?.setImageResource(item.imgRes)
     }
 }

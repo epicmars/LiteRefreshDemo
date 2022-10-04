@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
 }
+apply plugin: 'kotlin-android'
 
 android {
     compileSdk 32
@@ -50,5 +51,8 @@ dependencies {
 
     // timber
     implementation "com.jakewharton.timber:timber:5.0.1"
+    implementation "androidx.core:core-ktx:+"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 }

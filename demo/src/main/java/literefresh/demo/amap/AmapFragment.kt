@@ -1,9 +1,8 @@
-package literefresh.demo
+package literefresh.demo.amap
 
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import layoutbinder.annotations.BindLayout
@@ -13,8 +12,10 @@ import literefresh.OnScrollListener
 import literefresh.behavior.Checkpoint
 import literefresh.behavior.Configuration
 import literefresh.behavior.OffsetConfig
+import literefresh.demo.ImageItem
+import literefresh.demo.ImageViewHolder
+import literefresh.demo.R
 import literefresh.demo.databinding.FragmentAmapBinding
-import literefresh.demo.utils.StatusBarUtils
 import literefresh.sample.base.ui.BaseFragment
 import literefresh.sample.base.ui.RecyclerAdapter
 
@@ -33,8 +34,8 @@ class AmapFragment : BaseFragment() {
 //            binding.coordinator.layoutParams = params
 //        }
 
-        binding?.recyclerView?.layoutManager = LinearLayoutManager(context)
-        binding?.recyclerView?.adapter = recyclerAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        binding.recyclerView.adapter = recyclerAdapter
 
         recyclerAdapter.register(ImageViewHolder::class.java)
         recyclerAdapter.addPayload(
@@ -44,52 +45,76 @@ class AmapFragment : BaseFragment() {
         )
 
         val searchBarHeight =
-            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70f, resources.displayMetrics).toInt()
-//        val searchBarTopMargin =
-//            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24f, resources.displayMetrics).toInt()
-        val searchBarBehavior = LiteRefresh.getHeaderBehavior(binding?.ivSearch.root)
-//        searchBarBehavior.config.topEdgeConfig.deactiveCheckpoint(
-//            OffsetConfig.Builder().setOffset(0).build(), Checkpoint.Type.STOP_POINT
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 86f, resources.displayMetrics).toInt()
+        val searchBarTopMargin =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics).toInt()
+        val searchBarBehavior = LiteRefresh.getHeaderBehavior(binding.searchBar.root)
+        searchBarBehavior.config.topEdgeConfig.deactiveCheckpoint(
+            OffsetConfig.Builder().setOffset(Integer.MIN_VALUE).build(), Checkpoint.Type.STOP_POINT
+        )
+        searchBarBehavior.config.addTopCheckpoint(
+            OffsetConfig.Builder().setOffset(searchBarTopMargin).build(),
+            Checkpoint.Type.STOP_POINT
+
+        )
+
+//        searchBarBehavior.config.bottomEdgeConfig.deactiveCheckpoint(
+//            OffsetConfig.Builder().setOffset(Integer.MAX_VALUE).build(), Checkpoint.Type.STOP_POINT
 //        )
-//        searchBarBehavior.config.addTopCheckpoint(
-//            OffsetConfig.Builder().setOffset(searchBarTopMargin).build(),
+
+//        searchBarBehavior.config.addBottomCheckpoint(
+//            OffsetConfig.Builder().setOffsetRatioOfParent(0.98f).build(),
 //            Checkpoint.Type.STOP_POINT
 //        )
 
-        val behavior = LiteRefresh.getContentBehavior(binding?.recyclerView)
-        behavior.config.bottomEdgeConfig.deactiveCheckpoint(
+        val searchBarBgBehavior = LiteRefresh.getHeaderBehavior(binding.searchBarBg)
+        searchBarBgBehavior.config.topEdgeConfig.deactiveCheckpoint(
+            OffsetConfig.Builder().setOffset(Integer.MIN_VALUE).build(), Checkpoint.Type.STOP_POINT
+        )
+        searchBarBgBehavior.config.addTopCheckpoint(
+            OffsetConfig.Builder().setOffset(searchBarTopMargin).build(),
+            Checkpoint.Type.STOP_POINT
+        )
+
+        val scrollableBehavior = LiteRefresh.getScrollableBehavior(binding.recyclerView)
+        scrollableBehavior.config.bottomEdgeConfig.deactiveCheckpoint(
             OffsetConfig.Builder()
                 .setOffset(0).build(),
             Checkpoint.Type.STOP_POINT
         )
-        behavior.config.bottomEdgeConfig.addCheckpoint(
+        scrollableBehavior.config.bottomEdgeConfig.addCheckpoint(
             OffsetConfig.Builder()
                 .setOffsetRatioOfParent(1.0f).build(),
             Checkpoint.Type.STOP_POINT
         )
         // fixme remove a default stop point, should stop point be treated specially?
-        behavior.config.topEdgeConfig.deactiveCheckpoint(
+        scrollableBehavior.config.topEdgeConfig.deactiveCheckpoint(
             OffsetConfig.Builder().setOffset(0).build(), Checkpoint.Type.STOP_POINT
         )
 
-        behavior.config.addTopCheckpoint(
+        // TODO 是否保留deactive方法
+        scrollableBehavior.config.topEdgeConfig.deactiveCheckpoint(
+            OffsetConfig.Builder().setOffsetRatioOfParent(1.0f).build(), Checkpoint.Type.STOP_POINT
+        )
+
+        scrollableBehavior.config.addTopCheckpoint(
             OffsetConfig.Builder().setOffset(searchBarHeight).build(),
             Checkpoint.Type.STOP_POINT, Checkpoint.Type.ANCHOR_POINT
         )
 
-        behavior.config.addTopCheckpoint(
+        scrollableBehavior.config.addTopCheckpoint(
             OffsetConfig.Builder()
                 .setOffsetRatioOfParent(0.6f)
                 .build(), Checkpoint.Type.ANCHOR_POINT
         )
 
-        behavior.config.addTopCheckpoint(
+        scrollableBehavior.config.addTopCheckpoint(
             OffsetConfig.Builder()
-                .setOffsetRatioOfParent(1.0f)
-                .build(), Checkpoint.Type.ANCHOR_POINT
+                .setOffsetRatioOfParent(0.99f)
+                .build(), Checkpoint.Type.ANCHOR_POINT, Checkpoint.Type.STOP_POINT
         )
 
-        behavior.addOnScrollListener(object : OnScrollListener {
+        scrollableBehavior.addOnScrollListener(object : OnScrollListener {
             override fun onStartScroll(
                 parent: CoordinatorLayout,
                 child: View,
@@ -128,7 +153,7 @@ class AmapFragment : BaseFragment() {
             }
         })
 
-        behavior.addOnRefreshListener(object : OnRefreshListener {
+        scrollableBehavior.addOnRefreshListener(object : OnRefreshListener {
             override fun onRefreshStart() {
 
             }

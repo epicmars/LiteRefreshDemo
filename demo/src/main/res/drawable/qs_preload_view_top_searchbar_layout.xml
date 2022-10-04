@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:left="8dp" android:top="20dp" android:right="8dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/c_1"/>
+            <corners android:topLeftRadius="@dimen/route_common_radius" android:topRightRadius="@dimen/route_common_radius"/>
+        </shape>
+    </item>
+    <item android:drawable="@drawable/qs_toolbox_top_shadows" android:top="12dp"/>
+</layer-list>

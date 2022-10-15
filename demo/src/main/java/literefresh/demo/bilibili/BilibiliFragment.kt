@@ -3,7 +3,6 @@ package literefresh.demo.bilibili
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
-import androidx.databinding.adapters.ViewBindingAdapter.setPadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import layoutbinder.annotations.BindLayout
@@ -25,11 +24,11 @@ class BilibiliFragment : BaseFragment() {
     }
 
     @BindLayout(R.layout.fragment_bilibili)
-    lateinit var binding:FragmentBilibiliBinding
+    lateinit var binding: FragmentBilibiliBinding
 
     private lateinit var viewModel: BilibiliViewModel
 
-    val recyclerAdapter = RecyclerAdapter()
+    private val recyclerAdapter = RecyclerAdapter()
 
     val refreshCompleteRunnable = Runnable {
         binding.swipeRefershLayout.isRefreshing = false
@@ -103,22 +102,24 @@ class BilibiliFragment : BaseFragment() {
         )
 
         // fixme remove a default stop point, should stop point be treated specially?
-        scrollableBehavior.config.topEdgeConfig.deactiveCheckpoint(
+        scrollableBehavior.config.topEdgeConfig.deactivateCheckpoint(
             OffsetConfig.Builder().setOffset(0).build(), Checkpoint.Type.STOP_POINT
         )
 
         // TODO 是否保留deactive方法
-        scrollableBehavior.config.topEdgeConfig.deactiveCheckpoint(
+        scrollableBehavior.config.topEdgeConfig.deactivateCheckpoint(
             OffsetConfig.Builder().setOffsetRatioOfParent(1.0f).build(), Checkpoint.Type.STOP_POINT
+        )
+
+        scrollableBehavior.config.topEdgeConfig.setInitiateOffset(
+            OffsetConfig.Builder().setOffset(headerHeight).build()
         )
     }
 
     private fun setupHeader(searchBarHeight: Int, headerHeight: Int) {
         // setup header behavior of search bar
         val searchBarBehavior = LiteRefresh.getHeaderBehavior(binding.ivHeader)
-        searchBarBehavior.config.topEdgeConfig.deactiveCheckpoint(
-            OffsetConfig.Builder().setOffset(Integer.MIN_VALUE).build(), Checkpoint.Type.STOP_POINT
-        )
+        searchBarBehavior.config.deactivateTopDefaultMinOffset()
         searchBarBehavior.config.addTopCheckpoint(
             OffsetConfig.Builder().setOffset(searchBarHeight - headerHeight).build(),
             Checkpoint.Type.STOP_POINT
@@ -129,9 +130,7 @@ class BilibiliFragment : BaseFragment() {
             Checkpoint.Type.STOP_POINT
         )
 
-        searchBarBehavior.config.bottomEdgeConfig.deactiveCheckpoint(
-            OffsetConfig.Builder().setOffset(Integer.MIN_VALUE).build(), Checkpoint.Type.STOP_POINT
-        )
+        searchBarBehavior.config.deactivateBottomDefaultMinOffset()
         searchBarBehavior.config.addBottomCheckpoint(
             OffsetConfig.Builder().setOffset(searchBarHeight).build(),
             Checkpoint.Type.STOP_POINT

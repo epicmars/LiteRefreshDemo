@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">LiteRefreshDemo</string>
 
-    <string name="name_amap">高德地图</string>
-    <string name="name_alipay">支付宝</string>
-    <string name="name_bilibili">哔哩哔哩</string>
-    <string name="name_weibo">微博</string>
+    <string name="name_amap">Amap</string>
+    <string name="name_alipay">AliPay</string>
+    <string name="name_bilibili">Bilibili</string>
+    <string name="name_weibo">Weibo</string>
 </resources>

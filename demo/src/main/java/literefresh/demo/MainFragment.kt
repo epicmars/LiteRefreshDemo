@@ -39,7 +39,7 @@ class MainFragment : BaseFragment(), OnEntryClickListener {
         appListItem.add(AppEntryItem(R.drawable.weibo_logo, R.string.name_weibo, this))
         appListItem.add(AppEntryItem(R.drawable.amap_v3_icon, R.string.name_amap, this))
         appListItem.add(AppEntryItem(R.mipmap.bilibili_ic_launcher, R.string.name_bilibili, this))
-        appListItem.add(AppEntryItem(R.drawable.alipay_appicon, R.string.name_alipay, this))
+        // appListItem.add(AppEntryItem(R.drawable.alipay_appicon, R.string.name_alipay, this))
         adapter.addPayload(appListItem)
     }
 

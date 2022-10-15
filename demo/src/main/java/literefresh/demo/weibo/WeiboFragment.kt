@@ -37,6 +37,7 @@ import literefresh.behavior.Checkpoint
 import literefresh.behavior.Configuration
 import literefresh.behavior.OffsetConfig
 import literefresh.behavior.ContentScrollableBehavior
+import literefresh.behavior.HeaderRefreshBehavior
 import literefresh.demo.R
 import literefresh.demo.databinding.FragmentWeiboBinding
 import literefresh.demo.databinding.ViewholderWeiboItemBinding
@@ -58,10 +59,18 @@ class WeiboFragment : BaseFragment() {
     val recyclerAdapter = RecyclerAdapter()
 
     val imgArray = arrayOf(
-        R.drawable.weibo_item1, R.drawable.weibo_item2, R.drawable.weibo_item3,
-        R.drawable.weibo_item4, R.drawable.weibo_item5, R.drawable.weibo_item6,
-        R.drawable.weibo_item7, R.drawable.weibo_item8, R.drawable.weibo_item9,
-        R.drawable.weibo_item10, R.drawable.weibo_item11, R.drawable.weibo_item12
+        R.drawable.weibo_item1,
+        R.drawable.weibo_item2,
+        R.drawable.weibo_item3,
+        R.drawable.weibo_item4,
+        R.drawable.weibo_item5,
+        R.drawable.weibo_item6,
+        R.drawable.weibo_item7,
+        R.drawable.weibo_item8,
+        R.drawable.weibo_item9,
+        R.drawable.weibo_item10,
+        R.drawable.weibo_item11,
+        R.drawable.weibo_item12
     )
     lateinit var mediaPlayer: MediaPlayer
     lateinit var handler: Handler
@@ -83,21 +92,26 @@ class WeiboFragment : BaseFragment() {
 
         recyclerAdapter.register(WeiboViewHolder::class.java)
         recyclerAdapter.addPayload(
-            WeiboItem(R.drawable.weibo_item1),
-            WeiboItem(R.drawable.weibo_item2)
+            WeiboItem(R.drawable.weibo_item1), WeiboItem(R.drawable.weibo_item2)
         )
 
         val headerHeight = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            64F,
-            context?.resources?.displayMetrics
+            TypedValue.COMPLEX_UNIT_DIP, 64F, context?.resources?.displayMetrics
         ).toInt()
 
         val msgHeight = TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            32F,
-            context?.resources?.displayMetrics
+            TypedValue.COMPLEX_UNIT_DIP, 32F, context?.resources?.displayMetrics
         ).toInt()
+
+        setupHeaderBehavior(headerHeight)
+        setupContentBehavior(view, headerHeight, msgHeight)
+    }
+
+    private fun setupHeaderBehavior(headerHeight: Int) {
+        val headerBehavior = LiteRefresh.getHeaderBehavior(binding.refreshHeader)
+    }
+
+    private fun setupContentBehavior(view: View, headerHeight: Int, msgHeight: Int) {
         behavior = LiteRefresh.getScrollableBehavior(binding.recyclerView)
 
         val topTriggerOffset = OffsetConfig.Builder().setOffset(headerHeight).build()
@@ -109,7 +123,7 @@ class WeiboFragment : BaseFragment() {
         val resetHeader = {
             binding.tvMsgUpdated.animate().alpha(0f).translationY(-msgHeight.toFloat())
                 .setDuration(500).start()
-            behavior.stopScroll(false)
+            behavior.finishScroll(false)
         }
 
         val revealTopToastRunnable = {
@@ -137,7 +151,7 @@ class WeiboFragment : BaseFragment() {
             }
 
             override fun onRefreshComplete(throwable: Throwable?) {
-                Timber.d("onRefreshEnd")
+                Timber.d("onRefreshComplete")
                 playNewBlogSound()
                 behavior.animateToPositionIfLarger(msgHeight)
 
@@ -181,39 +195,26 @@ class WeiboFragment : BaseFragment() {
 
         behavior.addOnScrollListener(object : OnScrollListener {
             override fun onStartScroll(
-                parent: CoordinatorLayout,
-                child: View,
-                config: Configuration?,
-                type: Int
+                parent: CoordinatorLayout, child: View, config: Configuration?, type: Int
             ) {
                 Timber.d("cancelAnimation")
                 behavior.cancelAnimation()
             }
 
             override fun onPreScroll(
-                parent: CoordinatorLayout,
-                view: View,
-                config: Configuration?,
-                type: Int
+                parent: CoordinatorLayout, view: View, config: Configuration?, type: Int
             ) {
 
             }
 
             override fun onScroll(
-                parent: CoordinatorLayout,
-                view: View,
-                config: Configuration?,
-                delta: Int,
-                type: Int
+                parent: CoordinatorLayout, view: View, config: Configuration?, delta: Int, type: Int
             ) {
 
             }
 
             override fun onStopScroll(
-                parent: CoordinatorLayout,
-                view: View,
-                config: Configuration?,
-                type: Int
+                parent: CoordinatorLayout, view: View, config: Configuration?, type: Int
             ) {
                 if (behavior.controller.isRefreshing) {
 //                    Timber.d("showHeader")
@@ -239,18 +240,15 @@ class WeiboFragment : BaseFragment() {
 
         // create the animator for this view (the start radius is zero)
         val circularRevealAnim = ViewAnimationUtils.createCircularReveal(
-            binding.tvMsgUpdated,
-            cx,
-            cy,
-            0f,
-            finalRadius
+            binding.tvMsgUpdated, cx, cy, 0f, finalRadius
         ).setDuration(300)
         // make the view visible and start the animation
         binding.tvMsgUpdated.visibility = View.VISIBLE
         binding.tvMsgUpdated.translationY = 0f
 
-        val alphaAnim = ObjectAnimator.ofFloat(binding.tvMsgUpdated, "alpha", 0.0f, 1.0f)
-            .setDuration(800)
+        val alphaAnim =
+            ObjectAnimator.ofFloat(binding.tvMsgUpdated, "alpha", 0.0f, 1.0f)
+                .setDuration(800)
 
         val animatorSet = AnimatorSet()
         animatorSet.playTogether(circularRevealAnim, alphaAnim)

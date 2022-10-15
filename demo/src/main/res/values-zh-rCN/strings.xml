@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">轻刷新示例</string>
+
+    <string name="name_amap">高德地图</string>
+    <string name="name_alipay">支付宝</string>
+    <string name="name_bilibili">哔哩哔哩</string>
+    <string name="name_weibo">微博</string>
+</resources>

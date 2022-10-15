@@ -48,15 +48,8 @@ class AmapFragment : BaseFragment() {
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 86f, resources.displayMetrics).toInt()
         val searchBarTopMargin =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics).toInt()
-        val searchBarBehavior = LiteRefresh.getHeaderBehavior(binding.searchBar.root)
-        searchBarBehavior.config.topEdgeConfig.deactiveCheckpoint(
-            OffsetConfig.Builder().setOffset(Integer.MIN_VALUE).build(), Checkpoint.Type.STOP_POINT
-        )
-        searchBarBehavior.config.addTopCheckpoint(
-            OffsetConfig.Builder().setOffset(searchBarTopMargin).build(),
-            Checkpoint.Type.STOP_POINT
 
-        )
+        setupSearchBarBehavior(searchBarTopMargin)
 
 //        searchBarBehavior.config.bottomEdgeConfig.deactiveCheckpoint(
 //            OffsetConfig.Builder().setOffset(Integer.MAX_VALUE).build(), Checkpoint.Type.STOP_POINT
@@ -67,17 +60,24 @@ class AmapFragment : BaseFragment() {
 //            Checkpoint.Type.STOP_POINT
 //        )
 
-        val searchBarBgBehavior = LiteRefresh.getHeaderBehavior(binding.searchBarBg)
-        searchBarBgBehavior.config.topEdgeConfig.deactiveCheckpoint(
-            OffsetConfig.Builder().setOffset(Integer.MIN_VALUE).build(), Checkpoint.Type.STOP_POINT
-        )
-        searchBarBgBehavior.config.addTopCheckpoint(
+        setupSearbarBgBehavior(searchBarTopMargin)
+        setupContentBehavior(searchBarHeight)
+    }
+
+    private fun setupSearchBarBehavior(searchBarTopMargin: Int) {
+        val searchBarBehavior = LiteRefresh.getHeaderBehavior(binding.searchBar.root)
+
+        searchBarBehavior.config.deactivateTopDefaultMinOffset()
+        searchBarBehavior.config.addTopCheckpoint(
             OffsetConfig.Builder().setOffset(searchBarTopMargin).build(),
             Checkpoint.Type.STOP_POINT
-        )
 
+        )
+    }
+
+    private fun setupContentBehavior(searchBarHeight: Int) {
         val scrollableBehavior = LiteRefresh.getScrollableBehavior(binding.recyclerView)
-        scrollableBehavior.config.bottomEdgeConfig.deactiveCheckpoint(
+        scrollableBehavior.config.bottomEdgeConfig.deactivateCheckpoint(
             OffsetConfig.Builder()
                 .setOffset(0).build(),
             Checkpoint.Type.STOP_POINT
@@ -88,12 +88,12 @@ class AmapFragment : BaseFragment() {
             Checkpoint.Type.STOP_POINT
         )
         // fixme remove a default stop point, should stop point be treated specially?
-        scrollableBehavior.config.topEdgeConfig.deactiveCheckpoint(
+        scrollableBehavior.config.topEdgeConfig.deactivateCheckpoint(
             OffsetConfig.Builder().setOffset(0).build(), Checkpoint.Type.STOP_POINT
         )
 
         // TODO 是否保留deactive方法
-        scrollableBehavior.config.topEdgeConfig.deactiveCheckpoint(
+        scrollableBehavior.config.topEdgeConfig.deactivateCheckpoint(
             OffsetConfig.Builder().setOffsetRatioOfParent(1.0f).build(), Checkpoint.Type.STOP_POINT
         )
 
@@ -170,5 +170,14 @@ class AmapFragment : BaseFragment() {
 
             }
         })
+    }
+
+    private fun setupSearbarBgBehavior(searchBarTopMargin: Int) {
+        val searchBarBgBehavior = LiteRefresh.getHeaderBehavior(binding.searchBarBg)
+        searchBarBgBehavior.config.deactivateTopDefaultMinOffset()
+        searchBarBgBehavior.config.addTopCheckpoint(
+            OffsetConfig.Builder().setOffset(searchBarTopMargin).build(),
+            Checkpoint.Type.STOP_POINT
+        )
     }
 }
